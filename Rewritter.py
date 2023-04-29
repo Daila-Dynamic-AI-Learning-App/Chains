@@ -4,7 +4,7 @@ from langchain.prompts import PromptTemplate
 from langchain.chains import LLMChain
 #write openai api key as an os environment variable
 import os
-apikey = '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'
+apikey = ''
 os.environ["OPENAI_API_KEY"] = apikey
 
 st.title("AI Rewritter Helper")

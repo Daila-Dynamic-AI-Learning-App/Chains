@@ -5,7 +5,8 @@ from langchain.document_loaders import GitbookLoader
 #loader = GitbookLoader("https://new-native.gitbook.io/onboarding/")
 #docs = loader.load()
 #Any other document loader can be used here
-
+apikey = ''
+os.environ["OPENAI_API_KEY"] = apikey
 #Run the summarization chain
 chain = load_summarize_chain(llm, chain_type="map_reduce")
 docs2 =chain.run(docs)
