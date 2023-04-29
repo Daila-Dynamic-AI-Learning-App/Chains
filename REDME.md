@@ -32,7 +32,9 @@ llm_chain("colorful socks")
 
 ```
 {'product': 'colorful socks', 'text': '\n\nSocktastic!'}
-```
+````
+
+
 Requirement:
 ``` 
 pip install langchain openai streamlit
