@@ -1,30 +1,32 @@
-from langchain.prompts import PromptTemplate
-from langchain.chains import LLMChain
+#!/usr/bin/env python3
+from langchain.prompts.prompt import PromptTemplate
+from langchain.chains import ConversationChain
 from langchain.memory import ConversationBufferMemory
 from langchain.chat_models import ChatOpenAI
 import os
 
 # set the openai api key
-os.environ['OPENAI_API_KEY'] = os.getenv('API_KEY')
+os.environ['OPENAI_API_KEY'] = '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'
 
 # using memory buffer for the current one in daila
 template = """
-{chat_history}
-Human: {human_input}
-"""
+{history}
+Human: {input}
+Professor:"""
+
 prompt = PromptTemplate(
-    input_variables=["chat_history", "human_input"],
+    input_variables=["history", "input"],
     template=template
 )
 
 llm = ChatOpenAI(temperature=0.5, model_name='gpt-4')
 memory = ConversationBufferMemory(
-    memory_key="chat_history"
+    ai_prefix="Professor"
 )
 
-chain = LLMChain(
-    llm=llm,
+conversation = ConversationChain(
     prompt=prompt,
+    llm=llm,
     memory=memory
 )
 
@@ -53,12 +55,12 @@ Question 1: What is 1 + 3?
 Question 2: What is 4 * 5?
 20
 """
-prom1 = chain.predict(human_input=first_input)
+prom1 = conversation.predict(input=first_input)
 print(prom1)
 
 while True:
     user_input = input('$ ')
     if user_input.lower() == 'quit':
         break
-    res = chain.predict(human_input=user_input)
+    res = conversation.predict(input=user_input)
     print(res)
